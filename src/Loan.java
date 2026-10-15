@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 
+/** Records a member's borrowing dates and return status for one library item. */
 public final class Loan {
     private final String id;
     private final LibraryItem item;
@@ -56,6 +57,7 @@ public final class Loan {
     }
 
     public boolean isOverdue() {
+        // Returned loans are never considered overdue, even if they were returned late.
         return isActive() && dueDate.isBefore(LocalDate.now());
     }
 

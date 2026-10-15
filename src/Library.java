@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/** Coordinates library items, members, and the loans created between them. */
 public final class Library {
     private final Map<String, LibraryItem> items = new HashMap<>();
     private final Map<String, Member> members = new HashMap<>();
@@ -100,6 +101,7 @@ public final class Library {
             throw new IllegalArgumentException("Duplicate loan ID: " + id);
         }
         if (loan.isActive()) {
+            // Rebuild the item's active-loan state when loading persisted records.
             item.restoreLoan(loan);
         }
         loans.put(id, loan);

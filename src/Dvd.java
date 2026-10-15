@@ -1,3 +1,4 @@
+/** A library item with a runtime and a seven-day loan period. */
 public final class Dvd extends LibraryItem {
     private final int runtimeMinutes;
 

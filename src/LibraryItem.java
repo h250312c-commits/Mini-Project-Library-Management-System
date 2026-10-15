@@ -1,3 +1,4 @@
+/** Shared identity, availability, and loan handling for books and DVDs. */
 public abstract class LibraryItem implements Borrowable {
     private final String id;
     private final String title;
@@ -41,6 +42,7 @@ public abstract class LibraryItem implements Borrowable {
                 borrowedOn,
                 borrowedOn.plusDays(loanPeriodDays()),
                 null);
+        // Add to the member first so a limit failure leaves the item available.
         member.addLoan(loan);
         activeLoan = loan;
         available = false;
@@ -72,6 +74,7 @@ public abstract class LibraryItem implements Borrowable {
             throw new IllegalArgumentException(fieldName + " cannot be blank.");
         }
         String trimmed = value.trim();
+        // Line breaks are disallowed because these values are stored in row-based CSV files.
         if (trimmed.indexOf('\n') >= 0 || trimmed.indexOf('\r') >= 0) {
             throw new IllegalArgumentException(fieldName + " cannot contain line breaks.");
         }

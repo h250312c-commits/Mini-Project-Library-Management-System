@@ -2,6 +2,7 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
 
+/** Handles menu input and presents library operations in a console session. */
 public final class LibraryCli {
     private final Library library;
     private final Scanner scanner;
@@ -27,6 +28,7 @@ public final class LibraryCli {
 
             String choice = scanner.nextLine().trim();
             try {
+                // Keep the menu active after recoverable input and library-operation errors.
                 switch (choice) {
                     case "1":
                         addItem();

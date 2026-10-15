@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/** A registered library member and the member's currently active loans. */
 public final class Member {
     private static final int MAX_ACTIVE_LOANS = 3;
     private static final Pattern EMAIL_PATTERN =
@@ -43,6 +44,7 @@ public final class Member {
     }
 
     void addLoan(Loan loan) throws MemberLimitExceededException {
+        // Enforce the borrowing cap before changing the active-loan list.
         if (activeLoans.size() >= MAX_ACTIVE_LOANS) {
             throw new MemberLimitExceededException(
                     "Member " + name + " already has the maximum of "

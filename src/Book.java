@@ -1,3 +1,4 @@
+/** A library item identified by its author and a 21-day loan period. */
 public final class Book extends LibraryItem {
     private final String author;
 

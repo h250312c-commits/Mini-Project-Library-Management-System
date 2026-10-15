@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+/** Application entry point that loads, runs, and saves the library. */
 public final class Main {
     private Main() {
     }
@@ -9,6 +10,7 @@ public final class Main {
     public static void main(String[] args) {
         Library library = new Library();
         CsvStore store = new CsvStore(Path.of("data"));
+        // Do not start the CLI with a partially loaded library if persisted data is invalid.
         try {
             store.loadInto(library);
         } catch (IOException exception) {

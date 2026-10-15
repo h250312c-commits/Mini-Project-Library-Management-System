@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/** Loads and saves library records as UTF-8 CSV files. */
 public final class CsvStore {
     private static final String ITEMS_FILE = "items.csv";
     private static final String MEMBERS_FILE = "members.csv";
@@ -29,6 +30,7 @@ public final class CsvStore {
         if (!Files.exists(directory)) {
             return;
         }
+        // Load referenced entities before loans so each loan can resolve its item and member.
         for (List<String> row : readRows(ITEMS_FILE, "type,id,title,detail")) {
             requireColumns(row, 4, ITEMS_FILE);
             LibraryItem item;
@@ -156,6 +158,7 @@ public final class CsvStore {
         }
         Files.write(temporary, lines, StandardCharsets.UTF_8);
         try {
+            // Replace each data file atomically where the filesystem supports it.
             Files.move(temporary, target, StandardCopyOption.REPLACE_EXISTING,
                     StandardCopyOption.ATOMIC_MOVE);
         } catch (IOException exception) {
@@ -176,6 +179,7 @@ public final class CsvStore {
         StringBuilder field = new StringBuilder();
         boolean quoted = false;
         boolean closedQuote = false;
+        // Parse quoted fields and doubled quotes without splitting embedded commas.
         for (int i = 0; i < line.length(); i++) {
             char character = line.charAt(i);
             if (quoted) {
